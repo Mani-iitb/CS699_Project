@@ -20,7 +20,7 @@ toDate = toDate.strftime("%Y-%m-%d")
 url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}?sort=bestflight_a"
 driver = webdriver.Chrome()
 driver.get(url=url)
-time.sleep(10)  # Allow time for the page to load
+time.sleep(10)  
 page = driver.page_source
 driver.quit()
 soup = BeautifulSoup(page, 'html.parser')
@@ -40,9 +40,8 @@ direct_flight_statuses = []
 flight_durations = []
 prices = []
 flight_names = []
-time_takeoff = []  # Changed name from takeoff_time to takeoff_times
-time_landing = []   # Changed name from landing_time to landing_times
-
+time_takeoff = []  
+time_landing = []   
 
 # Extracting departure times
 for departure in departure_info_elements:

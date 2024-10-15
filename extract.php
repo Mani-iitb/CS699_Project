@@ -4,7 +4,6 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL! Please contact the admin";
     return;
 }
-
 // Set content type to UTF-8 to properly display Unicode characters
 header('Content-Type: text/html; charset=utf-8');
 
@@ -47,7 +46,7 @@ for ($i = 0; $i < 15; $i++) {
             }
         }
 
-        // Prepare the SQL statement for batch insert using INSERT IGNORE
+        // Prepare the SQL statement for batch insert using INSERT IGNORE 
         if (!empty($values)) {
             $sql = "INSERT IGNORE INTO scrabbed_data (source_city, destination_city, flight_name, flight_duration, departure_time, time_takeoff, time_landing, price, direct_flight_status) 
                     VALUES " . implode(', ', $values);
@@ -64,8 +63,6 @@ for ($i = 0; $i < 15; $i++) {
         }
     }
 }
-
-
 
 mysqli_close($con);
 ?>
