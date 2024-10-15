@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar';
 import Error from './components/Error';
 import './App.css';
 import logo from './images/logo.png';
+import React from 'react';
 
 function App() {
   return (
