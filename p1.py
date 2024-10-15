@@ -17,7 +17,7 @@ class CheapflightsSpider(scrapy.Spider):
         "content-type": "application/x-www-form-urlencoded",
         "referer": "https://www.in.cheapflights.com/flight-search/DEL-BOM/2024-09-30/2024-09-30?sort=bestflight_a",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
-        "x-requested-with": "XMLHttpRequest"
+        
     }
 
     def parse(self, response):
