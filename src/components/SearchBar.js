@@ -10,12 +10,21 @@ function SearchBar() {
     const [showResults, setShowResults] = useState(false);
     const navigate = useNavigate();
 
-    async function getFlights(){
+    function getFlights(){
         try {
-            const response = await axios.get('http://localhost/api/', inputs)
-            console.log(response.data);
-            setflights(response.data);
-            setShowResults(true);
+            axios({
+                method: "get",
+                url: "http://localhost/CS699_Project/?",
+                params: {
+                  source: inputs.source,
+                  destination: inputs.destination,
+                  date: inputs.date
+                }
+              }).then(function(response) {
+                console.log(response.data);
+                setflights(response.data);
+                setShowResults(true);
+            });
         } catch(error){
             console.log("error");
             console.log(error);

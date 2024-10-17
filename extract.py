@@ -11,6 +11,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Input data
 sourceCity = sys.argv[1]
+
 desCity = sys.argv[2]
 fromDate = sys.argv[3]
 toDate = datetime.strptime(fromDate, "%Y-%m-%d") + timedelta(days=7)
@@ -18,9 +19,14 @@ toDate = toDate.strftime("%Y-%m-%d")
 
 # Scraping the first website
 url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}?sort=bestflight_a"
-driver = webdriver.Chrome()
+option = webdriver.ChromeOptions()
+option.add_argument("--headless=old")
+userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+option.add_argument(f'user-agent={userAgent}')
+
+driver = webdriver.Chrome(options=option)
 driver.get(url=url)
-time.sleep(10)  
+time.sleep(5)  
 page = driver.page_source
 driver.quit()
 soup = BeautifulSoup(page, 'html.parser')
@@ -88,10 +94,15 @@ for flight in flight_name_info:
 # print(str(len(flight_names))+" "+str(len(flight_durations))+" "+str(len(time_landing))+" "+str(len(prices))+" "+str(len(direct_flight_statuses)))
 dat=datetime.strptime(fromDate,"%Y-%m-%d")
 dat=dat.strftime("%d%m%Y")
-driver=webdriver.Chrome()
+option = webdriver.ChromeOptions()
+option.add_argument("--headless=old")
+userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+option.add_argument(f'user-agent={userAgent}')
+
+driver = webdriver.Chrome(options=option)
 url=f"https://www.ixigo.com/search/result/flight?from={sourceCity}&to={desCity}&date={dat}&adults=1&children=0&infants=0&class=e&source=Search%20Form"
 driver.get(url=url)
-time.sleep(10)
+time.sleep(5)
 page=driver.page_source
 driver.quit()
 soup=BeautifulSoup(page,"html.parser")
@@ -141,15 +152,20 @@ for detail in details[5]:  # Access the flight info section (assumed to be detai
     airport_routes.append("Not available")
 
 
-driver=webdriver.Chrome()
+option = webdriver.ChromeOptions()
+option.add_argument("--headless=old")
+userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+option.add_argument(f'user-agent={userAgent}')
+
+driver = webdriver.Chrome(options=option)
 url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}/{desCity}/1/0/0/E/{fromDate}"
 driver.get(url=url)
-time.sleep(10)
+time.sleep(20)
 page=driver.page_source
 driver.quit()
 soup=BeautifulSoup(page,"html.parser")
 details=soup.find(class_="_2OdgL")
- 
+
 for detail in details:
     flight=detail.find(class_="_2cP56")
     if(str(flight)=="None"):
@@ -193,10 +209,15 @@ for detail in details:
 
 depart_date=datetime.strptime(fromDate,"%Y-%m-%d")
 depart_date=depart_date.strftime("%d/%m/%Y")
-driver=webdriver.Chrome()
+option = webdriver.ChromeOptions()
+option.add_argument("--headless=old")
+userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+option.add_argument(f'user-agent={userAgent}')
+
+driver = webdriver.Chrome(options=option)
 url=f"https://www.cleartrip.com/flights/results?adults=1&childs=0&infants=0&class=Economy&depart_date={depart_date}&from={sourceCity}&to={desCity}"
 driver.get(url=url)
-time.sleep(10)
+time.sleep(5)
 page=driver.page_source
 driver.quit()
 soup=BeautifulSoup(page,"html.parser")
