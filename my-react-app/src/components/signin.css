@@ -1,0 +1,98 @@
+/* Modal overlay background */
+.signin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7); /* Darker background for more contrast */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal content box */
+.signin-modal-content {
+    background: #ffffff;
+    border-radius: 10px; /* Slightly larger radius for a softer look */
+    width: 400px;
+    padding: 30px; /* Increased padding for a more spacious feel */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow for better separation */
+}
+
+/* Modal header */
+.signin-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Close button style */
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Larger font size for better visibility */
+}
+
+/* Modal form input groups */
+.input-group {
+    margin-bottom: 20px; /* Increased margin for better spacing */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px; /* Reduced margin for tighter spacing */
+    font-weight: 600; /* Bolder label for better readability */
+}
+
+.form-control {
+    width: 100%;
+    padding: 6px; /* Increased padding for more touch-friendly inputs */
+    border-radius: 5px; /* Slightly larger radius for inputs */
+    border: 1px solid #ccc;
+    transition: border-color 0.3s; /* Smooth transition for focus */
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Highlight border color on focus */
+    outline: none; /* Remove default outline */
+    
+}
+
+/* Primary button styles */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 12px; /* Increased padding for better touch target */
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker on hover for better feedback */
+}
+
+/* Footer */
+.signin-modal-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px; /* Smaller font size for footer */
+}
+
+.signin-modal-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signin-modal-footer a:hover {
+    text-decoration: underline;
+    color: #0056b3; /* Darker color on hover for better feedback */
+}
+.error {
+    color: red;
+    }
+  

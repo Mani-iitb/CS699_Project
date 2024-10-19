@@ -10,13 +10,77 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Input data
-sourceCity = sys.argv[1]
-
-desCity = sys.argv[2]
+source = sys.argv[1]
+des = sys.argv[2]
 fromDate = sys.argv[3]
-toDate = datetime.strptime(fromDate, "%Y-%m-%d") + timedelta(days=7)
-toDate = toDate.strftime("%Y-%m-%d")
-
+d=fromDate
+indian_airports = {
+    "Ahmedabad": "AMD",
+    "Bangalore": "BLR",
+    "Chennai": "MAA",
+    "Delhi": "DEL",
+    "Hyderabad": "HYD",
+    "Kolkata": "CCU",
+    "Mumbai": "BOM",
+    "Pune": "PNQ",
+    "Jaipur": "JAI",
+    "Lucknow": "LKO",
+    "Kochi": "COK",
+    "Goa": "GOI",
+    "Surat": "STV",
+    "Coimbatore": "CJB",
+    "Nagpur": "NAG",
+    "Bhopal": "BHO",
+    "Vadodara": "BDQ",
+    "Indore": "IDR",
+    "Visakhapatnam": "VTZ",
+    "Patna": "PAT",
+    "Srinagar": "SXR",
+    "Mangaluru": "IXE",
+    "Dehradun": "DED",
+    "Bhubaneswar": "BBI",
+    "Raipur": "RPR",
+    "Varanasi": "VNS",
+    "Amritsar": "ATQ",
+    "Jodhpur": "JDH",
+    "Gwalior": "GWL",
+    "Udaipur": "UDR",
+    "Agra": "AGR",
+    "Ranchi": "IXR",
+    "Shillong": "SHL",
+    "Aurangabad": "IXU",
+    "Dibrugarh": "DIB",
+    "Imphal": "IMF",
+    "Jorhat": "JRH",
+    "Dimapur": "DMR",
+    "Port Blair": "IXZ",
+    "Kozhikode": "CCJ",
+    "Guwahati": "GAU",
+    "Tirupati": "TIR",
+    "Mysuru": "MYQ",
+    "Patiala": "PTU",
+    "Bhatinda": "BUP",
+    "Kullu": "KUU",
+    "Jammu": "IXJ",
+    "Leh": "IXL",
+    "Aizawl": "AJL",
+    "Agartala": "IXA",
+    "Kangra": "DHM",
+    "Jaisalmer": "JSA",
+    "Diu": "DIU",
+    "Puducherry": "PNY",
+    "Bikaner": "BKB",
+    "Siliguri": "IXB",
+    "Silchar": "ICM",
+    "Vijayawada": "VGA",
+    "Bhuj": "BHJ",
+    "Bhavnagar": "BHU",
+    "Rajkot": "RAJ",
+    "Nashik": "ISK",
+    "Kota": "KTU",
+}
+sourceCity = indian_airports.get(source, "BOM")
+desCity = indian_airports.get(des,"BOM")
 # Scraping the first website
 url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}?sort=bestflight_a"
 option = webdriver.ChromeOptions()
@@ -48,7 +112,8 @@ prices = []
 flight_names = []
 time_takeoff = []  
 time_landing = []   
-
+dateInfo=[]
+website=[]
 # Extracting departure times
 for departure in departure_info_elements:
     time_spans = departure.find_all('span')
@@ -58,6 +123,9 @@ for departure in departure_info_elements:
     time_landing.append(et)
     combined_time=str(st)+" - "+str(et)
     departure_times.append(combined_time)
+    dateInfo.append(d)
+    website.append(url)
+
 
 # Extracting airport information
 for airport in airport_info_elements:
@@ -150,6 +218,9 @@ for detail in details[5]:  # Access the flight info section (assumed to be detai
     p=int(p.replace(",",""))
     prices.append(p)  # Add flight price to the list
     airport_routes.append("Not available")
+    #Date and link
+    dateInfo.append(d)
+    website.append(url)
 
 
 option = webdriver.ChromeOptions()
@@ -158,9 +229,9 @@ userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML
 option.add_argument(f'user-agent={userAgent}')
 
 driver = webdriver.Chrome(options=option)
-url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}/{desCity}/1/0/0/E/{fromDate}"
+url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}-{source}/{desCity}-{des}/1/0/0/E/{fromDate}"
 driver.get(url=url)
-time.sleep(20)
+time.sleep(10)
 page=driver.page_source
 driver.quit()
 soup=BeautifulSoup(page,"html.parser")
@@ -206,6 +277,9 @@ for detail in details:
     p=price.get_text()[1:]
     p=int(p.replace(",",""))
     prices.append(p)
+    #date and url
+    dateInfo.append(d)
+    website.append(url)
 
 depart_date=datetime.strptime(fromDate,"%Y-%m-%d")
 depart_date=depart_date.strftime("%d/%m/%Y")
@@ -246,11 +320,13 @@ for i in range(15):
     time_landing.append(et)
     tt=st+" - "+et
     departure_times.append(tt)
+    dateInfo.append(d)
+    website.append(url)
 
 for i in range (len(flight_names)):
     s=','
     if(i==len(flight_names)-1):
         s=';'
-    print(f"({sourceCity},{desCity},{flight_names[i]},{flight_durations[i]},{departure_times[i]},{time_takeoff[i]},{time_landing[i]},{prices[i]},{direct_flight_statuses[i]}){s}")
+    print(f"({source},{des},{flight_names[i]},{flight_durations[i]},{departure_times[i]},{time_takeoff[i]},{time_landing[i]},{prices[i]},{direct_flight_statuses[i]},{d},{website[i]}){s}")
 
 
