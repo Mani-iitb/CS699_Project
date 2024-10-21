@@ -10,6 +10,7 @@ function Signup({ onClose }) {
         name: '',
         email: '',
         contact: '',
+        userType:'',
         password: ''
     });
     const [errors, setErrors] = useState({});
@@ -50,16 +51,20 @@ function Signup({ onClose }) {
 
         const contactPattern = /^\d{10}$/; // Validates 10-digit phone number
         if (!formData.contact) {
-            errors.contact = "Contact number is required";
+            errors.contact = "Provide valid contact number is required";
         } else if (!contactPattern.test(formData.contact)) {
             errors.contact = "Invalid contact number, must be 10 digits";
         }
+        if(formData.userType!="Customer" || formData.userType!="Service Provider"){
+            errors.userType="Chose one either customer or service provider";
+        }
 
         if (!formData.password) {
-            errors.password = "Password is required";
+            errors.password = "Password is required of atleast length 6";
         } else if (formData.password.length < 6) {
             errors.password = "Password must be at least 6 characters";
         }
+
 
         setErrors(errors);
         return Object.keys(errors).length === 0; // Return true if no errors
@@ -94,7 +99,7 @@ function Signup({ onClose }) {
                     <form id="signin-form" className="form" onSubmit={handleSubmit}>
                         <div className='input-group form-group'>
                             <label htmlFor='name'>Name &nbsp;&nbsp;</label>
-                            <input 
+                            <input
                                 type='text'
                                 className='form-control'
                                 id='name'
@@ -121,7 +126,7 @@ function Signup({ onClose }) {
 
                         <div className='input-group form-group'>
                             <label htmlFor='contact'>Contact No&nbsp;&nbsp;</label>
-                            <input 
+                            <input
                                 type='tel'
                                 className='form-control'
                                 id='contact'
@@ -131,7 +136,18 @@ function Signup({ onClose }) {
                             />
                             {errors.contact && <span className="error">{errors.contact}</span>}
                         </div>
+                        <div className='input-group form-group'>
+                            <label htmlFor='Type'>User Type&nbsp;&nbsp;</label>
+                            <input
+                                type='userType'
+                                className='form-control'
+                                placeholder='Customer/Service Provider'
+                                value={formData.userType}
+                                onChange={handleChange}
+                            />
+                            {errors.userType && <span className='error'>{errors.userType}</span>}
 
+                        </div>
                         <div className="input-group form-group">
                             <label htmlFor="password">Password&nbsp;&nbsp;</label>
                             <input
@@ -139,7 +155,7 @@ function Signup({ onClose }) {
                                 className="form-control"
                                 id="password"
                                 name="password"
-                                placeholder="Enter your password"
+                                placeholder="Enter password more than 6 character"
                                 value={formData.password}
                                 onChange={handleChange}
                             />
