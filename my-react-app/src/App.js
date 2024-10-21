@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 import SearchBar from './components/SearchBar';
 import Error from './components/Error';
-import logo from './images/logo.png';
 import Signin from './components/signin'; 
 import Signup from './components/signup'; 
 
@@ -74,19 +73,14 @@ function App() {
                         </div>
                     </nav>
                 </div>
-
-                {/* Logo in the Navbar */}
-                <nav className='navbar'>
-                    <nav className='navbar-container'>
-                        <Link to="/" className='navbar-logo'>
-                            <img src={logo} className='header-logo' alt='logo' />
-                        </Link>
-                    </nav>
-                </nav>
+                <div className='searchBar'>
+                    <Routes>
+                        <Route index element={<SearchBar />} />
+                    </Routes>
+                </div>
 
                 {/* Routes */}
                 <Routes>
-                    <Route index element={<SearchBar />} />
                     <Route path="error" element={<Error />} />
                     
                 </Routes>

@@ -3,10 +3,12 @@ import { useState } from "react";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Results from '../components/Results';
+import './SearchBar.css';
 
 function SearchBar() {
     const [inputs, setInputs] = useState();
     const [flights, setflights] = useState();
+    const [showSearch, setShowSearch] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ function SearchBar() {
                 console.log(response.data);
                 setflights(response.data);
                 setShowResults(true);
+                setShowSearch(true);
             });
         } catch(error){
             console.log("error");
@@ -59,70 +62,44 @@ function SearchBar() {
         setInputs(values => ({...values, [name]:value}));
         console.log(inputs);
     }
+      
   return (
     <div>
-            <h1>SearchBar</h1>
-            <form onSubmit={handleSubmit}>
-                <table cellSpacing="10">
-                    <tbody>
-                        <tr>
-                            <th>
-                                <label>Source:</label>
-                            </th>
-                            <td>
-                                <select name='source' id='source' onChange={handleChange}>
-                                    <option value="">--select--</option>
-                                    <option value="Bombay">Bombay</option>
-                                    <option value="Bangalore">Bangalore</option>
-                                    <option value="Chennai">Chennai</option>
-                                    <option value="Delhi">Delhi</option>
-                                    <option value="Goa">GOA</option>
-                                    <option value="Agmedabad">Ahmedabad</option>
-                                    <option value="Jaipur">Jaipur</option>
-                                    <option value="Lucknow">Lucknow</option>
-                                    <option value="Kota">Kota</option>
-                                    <option value="Rajkot">Rajkot</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label>Destination:</label>
-                            </th>
-                            <td>
-                                <select name='destination' id='destination' onChange={handleChange}>
-                                    <option value="">--select--</option>
-                                    <option value="Bombay">Bombay</option>
-                                    <option value="Bangalore">Bangalore</option>
-                                    <option value="Chennai">Chennai</option>
-                                    <option value="Delhi">Delhi</option>
-                                    <option value="Goa">GOA</option>
-                                    <option value="Agmedabad">Ahmedabad</option>
-                                    <option value="Jaipur">Jaipur</option>
-                                    <option value="Lucknow">Lucknow</option>
-                                    <option value="Kota">Kota</option>
-                                    <option value="Rajkot">Rajkot</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <label>Date:</label>
-                            </th>
-                            <td>
-                                <input type="date" name="date" onChange={handleChange}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2" align="right">
-                                <button>Save</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>             
-            </form>
-            {showResults ? <Results flights={flights}/> : null}
-        </div>
+        <div class='search-container'>
+            <form class="search-form" onSubmit={handleSubmit}>
+                <h1>Search Flight</h1>
+                    <select name='source' id='source' onChange={handleChange}>
+                        <option value="">--Source--</option>
+                        <option value="Bombay">Bombay</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">GOA</option>
+                        <option value="Ahmedabad">Ahmedabad</option>
+                        <option value="Jaipur">Jaipur</option>
+                        <option value="Lucknow">Lucknow</option>
+                        <option value="Kolkata">Kolkata</option>
+                        <option value="Rajkot">Rajkot</option>
+                    </select>
+                    <select name='destination' id='destination' onChange={handleChange}>
+                        <option value="">--Destination--</option>
+                        <option value="Bombay">Bombay</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">GOA</option>
+                        <option value="Ahmedabad">Ahmedabad</option>
+                        <option value="Jaipur">Jaipur</option>
+                        <option value="Lucknow">Lucknow</option>
+                        <option value="Kolkata">Kolkata</option>
+                        <option value="Rajkot">Rajkot</option>
+                    </select>
+                    <input type="date" name="date" onChange={handleChange}/>
+                    <input type="submit" value="Submit"/>      
+                  </form>
+              </div>
+        {showResults ? <Results flights={flights}/> : null}
+    </div>
   )
 }
 
