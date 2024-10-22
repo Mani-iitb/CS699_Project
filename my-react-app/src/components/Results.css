@@ -1,0 +1,93 @@
+.flight-header{
+    background-color: white;
+    width: 65%;
+    float: left;
+    margin: auto;
+}
+
+.results-container{
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    width: 83%;
+    margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.flight-card {
+    width: 96%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.flight-header {
+    width: 96%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-left: 2%;
+    display:inline;
+    justify-content: center;
+}
+
+.flight-card:hover {
+    transform: translateY(-10px);
+}
+
+.flight-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: #2980b9;
+}
+.flight-info p{
+    font-size: 1.5rem;
+    margin: 10px;
+    display: inline-block;
+    color: #333;
+    padding-left: 20px;
+}
+
+.flight-header p{
+    font-size: 1rem;
+    margin: 10px;
+    display: inline-block;
+    color: #333;
+}
+
+.flight-time{
+    font-size: 15px;
+}
+
+.flight-dur{
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+hr{ 
+    margin: 0em;
+    border-width: 2px;
+}
