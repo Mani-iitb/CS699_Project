@@ -1,0 +1,23 @@
+.card-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.card{
+    margin: 10px;
+}
+.button{
+    display: flex;
+    gap: 10px;
+    padding-bottom: 1px;
+}
+.btn{
+    padding: 2px;
+}
+.carousel-inner{
+    padding: 20px;
+}
+.d-block{
+    height: 400px;
+}

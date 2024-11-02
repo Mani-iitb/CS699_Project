@@ -5,10 +5,19 @@ import SearchBar from './components/SearchBar';
 import Error from './components/Error';
 import Signin from './components/signin'; 
 import Signup from './components/signup'; 
+import Destinations from './components/destination';
 
 function App() {
     const [showSignin, setShowSignin] = useState(false); // State to manage Signin modal visibility
     const [showSignup, setShowSignup] = useState(false); // State to manage Signup modal visibility
+    const [isLoggedIn, setLogin] =useState(false);
+    const [name, setName]=useState("");
+
+    const handleLogin=(name)=>{
+        setName(name);
+        setLogin(true);
+        
+    }
 
     return (
         <div className="App">
@@ -35,12 +44,12 @@ function App() {
                                             Menu
                                         </a>
                                         <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li><a className="dropdown-item" href="#">Another action</a></li>
+                                            <li><a className="dropdown-item" href="#">Book Food</a></li>
+                                            <li><a className="dropdown-item" href="#">Holiday Packages</a></li>
                                             <li>
                                                 <hr className="dropdown-divider" />
                                             </li>
-                                            <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                            <li><a className="dropdown-item" href="#">Travel Insurance</a></li>
                                         </ul>
                                     </li>
                                     <li className="nav-item">
@@ -50,10 +59,12 @@ function App() {
                                         <a className="nav-link" href="#">Seats</a>
                                     </li>
                                     <li>
-                                        <a href="#" className="nav-link">Destinations</a>
+                                        <Link to="/destination" className="nav-link">Destinations</Link>
                                     </li>
                                 </ul>
                                 <div>
+                                    { !isLoggedIn?(
+                                        <div>
                                     <ul className="navbar-nav">
                                         <li className="nav-item">
                                             <a href="#" className="nav-link" onClick={() => setShowSignup(true)}>
@@ -69,6 +80,25 @@ function App() {
                                         </li>
                                     </ul>
                                 </div>
+                                    ):(
+                                        <div>
+                                            <ul className='navbar-nav'>
+                                                <li className='nav-item' style={{ marginRight: '10px' }}>
+                                                    <i className="fa-solid fa-user"></i>
+                                                </li>
+                                                <li className='nav-item' style={{ marginRight: '10px' }}>
+                                                    <span>{name}</span>
+                                                </li>
+                                                <li className='nav-item'>
+                                                    <button type="button" className="btn btn-secondary btn-sm" style={{fontSize:'10px'}}>Settings</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    )
+
+                                    }
+                                </div>
                             </div>
                         </div>
                     </nav>
@@ -82,12 +112,12 @@ function App() {
                 {/* Routes */}
                 <Routes>
                     <Route path="error" element={<Error />} />
-                    
+                    <Route path='/destination' element = {<Destinations/>}/>
                 </Routes>
             </BrowserRouter>
 
             {/* Modals - Conditionally render based on state */}
-            {showSignin && <Signin onClose={() => setShowSignin(false)} onOpen={()=> setShowSignup(true)} />}
+            {showSignin && <Signin onClose={() => setShowSignin(false)} onOpen={()=> setShowSignup(true)} handleLogin={(name) => handleLogin(name)}/>}
             {showSignup && <Signup onClose={() => setShowSignup(false)} />}
         </div>
     );

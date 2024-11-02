@@ -1,5 +1,5 @@
 <?php
- // Adjust the path as necessary
+
 header("Access-Control-Allow-Origin: *");
 $con=mysqli_connect("127.0.0.1","root","","airline_info");
 

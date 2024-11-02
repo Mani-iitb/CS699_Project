@@ -2,13 +2,15 @@ import React, { useRef, useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import './signin.css'; // Import any CSS styles specific to the modal
 import './signup';
-function Signin({ onClose,onOpen }) {
+import $ from "jquery";
+function Signin({ onClose,onOpen,handleLogin }) {
   const modalRef = useRef();
   const [formData, setFormData] = useState({
     email: '',
     password: '' // Corrected spelling from 'passward' to 'password'
   });
   const [errors, setErrors] = useState({});
+
 
   // Close modal when clicking outside of it
   useEffect(() => {
@@ -51,14 +53,36 @@ function Signin({ onClose,onOpen }) {
     }
 
     setErrors(errors);
-    return Object.keys(errors).length === 0;
+    return Object.keys(errors).length == 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      alert("Logged In");
-      onClose();
+      const form = $(e.target);
+      $.ajax({
+        type:"POST",
+        url: form.attr("action"),
+        data : form.serialize(),
+        success(data){
+          
+          if(data==="Incorrect Passward"){
+            alert("Wrong Passwaar Try again ...");
+            setFormData({
+              email: '',
+              password: ''
+            })
+          }
+          else{
+            const name=data
+            handleLogin(name);
+            onClose();
+            
+          }
+        },
+      }
+      );
+     
     } else {
       console.log("Validation errors:", errors);
     }
@@ -77,7 +101,7 @@ function Signin({ onClose,onOpen }) {
 
         {/* Modal body with form */}
         <div className="signin-modal-body">
-          <form id="signin-form" className="form" method="post" onSubmit={handleSubmit}>
+          <form id="signin-form" action='http://localhost/SL Project/CS699_Project/my-react-app/PHP/signin.php' className="form" method="post" onSubmit={handleSubmit}>
             <div className="input-group form-group">
               <label htmlFor="email">Email&nbsp;&nbsp;</label>
               <input
@@ -98,10 +122,10 @@ function Signin({ onClose,onOpen }) {
               <input
                 type="password"
                 className="form-control"
-                id="password" // Corrected from 'passward' to 'password'
+                id="password" 
                 name="password"
                 placeholder="Enter your password"
-                value={formData.password} // Corrected from 'formData.passward' to 'formData.password'
+                value={formData.password} 
                 onChange={handleChange}
               />
               {/* Correctly display password errors */}
