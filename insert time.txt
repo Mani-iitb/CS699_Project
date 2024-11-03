@@ -1,0 +1,1 @@
+ALTER TABLE `scrabbed_data` ADD `insert_time` DATETIME NULL DEFAULT NULL AFTER `website_link`;

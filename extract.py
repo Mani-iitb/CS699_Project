@@ -13,6 +13,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 source = sys.argv[1]
 des = sys.argv[2]
 fromDate = sys.argv[3]
+fClass = sys.argv[4]
 d=fromDate
 indian_airports = {
     "Ahmedabad": "AMD",
@@ -82,7 +83,12 @@ indian_airports = {
 sourceCity = indian_airports.get(source, "BOM")
 desCity = indian_airports.get(des,"BOM")
 # Scraping the first website
-url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}?sort=bestflight_a"
+if fClass == 'B':
+    url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}/business?sort=bestflight_a"
+elif fClass == 'P':
+    url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}/premium?sort=bestflight_a"
+else:
+    url = f"https://www.kayak.co.in/flights/{sourceCity}-{desCity}/{fromDate}?sort=bestflight_a"
 option = webdriver.ChromeOptions()
 option.add_argument("--headless=old")
 userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
@@ -168,7 +174,13 @@ userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML
 option.add_argument(f'user-agent={userAgent}')
 
 driver = webdriver.Chrome(options=option)
-url=f"https://www.ixigo.com/search/result/flight?from={sourceCity}&to={desCity}&date={dat}&adults=1&children=0&infants=0&class=e&source=Search%20Form"
+
+if fClass == 'B':
+    url=f"https://www.ixigo.com/search/result/flight?from={sourceCity}&to={desCity}&date={dat}&adults=1&children=0&infants=0&class=b&source=Search%20Form"
+elif fClass == 'P':
+    url=f"https://www.ixigo.com/search/result/flight?from={sourceCity}&to={desCity}&date={dat}&adults=1&children=0&infants=0&class=w&source=Search%20Form"
+else:
+    url=f"https://www.ixigo.com/search/result/flight?from={sourceCity}&to={desCity}&date={dat}&adults=1&children=0&infants=0&class=e&source=Search%20Form"
 driver.get(url=url)
 time.sleep(5)
 page=driver.page_source
@@ -180,47 +192,50 @@ details = soup.find_all(class_="flex flex-col")
 count = 0  # Initialize a counter
 
 # Iterate through the flight details
-for detail in details[5]:  # Access the flight info section (assumed to be details[5])
-    if(count == 0):
-        count += 1  # Skip the first element (assumed to be a header or irrelevant)
-        continue
-    count += 1
-    if(count == len(details[5]) - 1):
-        break  # Skip the last element (if it contains irrelevant information)
+try:
+    for detail in details[5]:  # Access the flight info section (assumed to be details[5])
+        if(count == 0):
+            count += 1  # Skip the first element (assumed to be a header or irrelevant)
+            continue
+        count += 1
+        if(count == len(details[5]) - 1):
+            break  # Skip the last element (if it contains irrelevant information)
 
-    # Extract flight name and flight code
-    flight = detail.find(class_="body-md text-primary truncate max-w-[125px] airlineTruncate font-medium")
-    f = flight.get_text()
-    flight = detail.find_all(class_="body-sm text-secondary truncate max-w-[115px]")
-    f += " " + str(flight[0].get_text())  # Concatenate additional flight details (e.g., flight number)
-    flight_names.append(f)  # Add flight name and code to flight_names list
+        # Extract flight name and flight code
+        flight = detail.find(class_="body-md text-primary truncate max-w-[125px] airlineTruncate font-medium")
+        f = flight.get_text()
+        flight = detail.find_all(class_="body-sm text-secondary truncate max-w-[115px]")
+        f += " " + str(flight[0].get_text())  # Concatenate additional flight details (e.g., flight number)
+        flight_names.append(f)  # Add flight name and code to flight_names list
 
-    # Extract takeoff and landing times
-    st = detail.find(class_="h5 text-primary font-medium")  # Takeoff time
-    ft = detail.find(class_="h6 text-primary font-medium")  # Landing time
-    st=st.get_text()
-    ft=ft.get_text()
-    time_takeoff.append(st)  # Store takeoff time
-    time_landing.append(ft)  # Store landing time
-    t = st + " - " + ft # Combine takeoff and landing time
-    departure_times.append(t)  # Store formatted departure time
+        # Extract takeoff and landing times
+        st = detail.find(class_="h5 text-primary font-medium")  # Takeoff time
+        ft = detail.find(class_="h6 text-primary font-medium")  # Landing time
+        st=st.get_text()
+        ft=ft.get_text()
+        time_takeoff.append(st)  # Store takeoff time
+        time_landing.append(ft)  # Store landing time
+        t = st + " - " + ft # Combine takeoff and landing time
+        departure_times.append(t)  # Store formatted departure time
 
-    # Extract flight duration
-    t = detail.find_all(class_="body-xs text-secondary")
-    flight_durations.append(t[0].get_text())  # Add flight duration to the list
+        # Extract flight duration
+        t = detail.find_all(class_="body-xs text-secondary")
+        flight_durations.append(t[0].get_text())  # Add flight duration to the list
 
-    # Check if the flight is direct or has layovers
-    direct_flight_statuses.append(t[1].get_text())  # Store direct flight status (e.g., "Nonstop", "1 Stop", etc.)
+        # Check if the flight is direct or has layovers
+        direct_flight_statuses.append(t[1].get_text())  # Store direct flight status (e.g., "Nonstop", "1 Stop", etc.)
 
-    # Extract flight price
-    price = detail.find(class_="h5 text-primary font-bold")
-    p=price.get_text()[1:]
-    p=int(p.replace(",",""))
-    prices.append(p)  # Add flight price to the list
-    airport_routes.append("Not available")
-    #Date and link
-    dateInfo.append(d)
-    website.append(url)
+        # Extract flight price
+        price = detail.find(class_="h5 text-primary font-bold")
+        p=price.get_text()[1:]
+        p=int(p.replace(",",""))
+        prices.append(p)  # Add flight price to the list
+        airport_routes.append("Not available")
+        #Date and link
+        dateInfo.append(d)
+        website.append(url)
+except:
+    print("error")
 
 
 option = webdriver.ChromeOptions()
@@ -229,7 +244,12 @@ userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML
 option.add_argument(f'user-agent={userAgent}')
 
 driver = webdriver.Chrome(options=option)
-url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}-{source}/{desCity}-{des}/1/0/0/E/{fromDate}"
+if fClass == 'B':
+    url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}-{source}/{desCity}-{des}/1/0/0/B/{fromDate}"
+elif fClass == 'P':
+    url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}-{source}/{desCity}-{des}/1/0/0/P/{fromDate}"
+else:
+    url=f"https://tickets.paytm.com/flights/flightSearch/{sourceCity}-{source}/{desCity}-{des}/1/0/0/E/{fromDate}"
 driver.get(url=url)
 time.sleep(10)
 page=driver.page_source
@@ -289,7 +309,12 @@ userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML
 option.add_argument(f'user-agent={userAgent}')
 
 driver = webdriver.Chrome(options=option)
-url=f"https://www.cleartrip.com/flights/results?adults=1&childs=0&infants=0&class=Economy&depart_date={depart_date}&from={sourceCity}&to={desCity}"
+if fClass == 'B':
+    url=f"https://www.cleartrip.com/flights/results?adults=1&childs=0&infants=0&class=Business&depart_date={depart_date}&from={sourceCity}&to={desCity}"
+elif fClass == 'P':
+    url=f"https://www.cleartrip.com/flights/results?adults=1&childs=0&infants=0&class=Premium%20Economy&depart_date={depart_date}&from={sourceCity}&to={desCity}"
+else:
+    url=f"https://www.cleartrip.com/flights/results?adults=1&childs=0&infants=0&class=Economy&depart_date={depart_date}&from={sourceCity}&to={desCity}"
 driver.get(url=url)
 time.sleep(5)
 page=driver.page_source
@@ -328,5 +353,3 @@ for i in range (len(flight_names)):
     if(i==len(flight_names)-1):
         s=';'
     print(f"({source},{des},{flight_names[i]},{flight_durations[i]},{departure_times[i]},{time_takeoff[i]},{time_landing[i]},{prices[i]},{direct_flight_statuses[i]},{d},{website[i]}){s}")
-
-

@@ -1,0 +1,7 @@
+ALTER TABLE `scrabbed_data`
+  DROP PRIMARY KEY,
+   ADD PRIMARY KEY(
+     `flight_name`,
+     `departure_time`,
+     `Flight_Date`
+   );
