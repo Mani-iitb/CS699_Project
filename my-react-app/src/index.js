@@ -6,6 +6,6 @@ import Destinations from './components/destination';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    // <App />
-    <Destinations/>
+    <App />
+    // <Destinations/>
 );

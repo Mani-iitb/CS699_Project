@@ -5,6 +5,22 @@
     margin: auto;
 }
 
+.sort-container{
+    width: 15%;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    display: inline-block;
+    margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+    margin-left: 5px;
+    vertical-align: top;
+}
+.sort-container select{
+    display: inline-block;
+    width: 100%;
+}
+
 .results-container{
     background-color: #f2f2f2;
     border-radius: 10px;
@@ -12,6 +28,8 @@
     margin: auto;
     margin-top: 30px;
     padding: 20px;
+    display: inline-block;
+    margin-left: 10px;
 }
 
 .flight-card {
@@ -59,6 +77,11 @@
     transition: background-color 0.3s ease;
 }
 
+.link a{
+    text-decoration: none;
+    color: white;
+}
+
 .link:hover {
     background-color: #2980b9;
 }
@@ -90,4 +113,10 @@
 hr{ 
     margin: 0em;
     border-width: 2px;
+}
+
+.flight-logo {
+    width: 6%;
+    height: 6%;
+    justify-content: center;
 }

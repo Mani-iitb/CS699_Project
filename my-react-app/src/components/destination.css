@@ -5,6 +5,8 @@
     justify-content: center;
 }
 .card{
+    display: block;
+    position: relative;
     margin: 10px;
 }
 .button{
@@ -20,4 +22,14 @@
 }
 .d-block{
     height: 400px;
+}
+
+.button :hover{
+    transition: transform 0.3s ease;
+    transform: translateY(-10px);
+}
+
+.card-img-top{
+    padding: 10px;
+    border-radius: 1px;
 }

@@ -1,20 +1,22 @@
 // Destinations.js
 
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import "./destination.css";
-import myImage1 from '../images/Mumbai.jpeg';
+import myImage1 from '../images/Mumbai.jpg';
 import myImage2 from "../images/kolkata.jpg";
 import myImage3 from "../images/banglore.jpg";
 import myImage4 from "../images/hyderabad.jpg";
-import myImage5 from "../images/delhi.jpeg";
+import myImage5 from "../images/delhi.jpg";
 import myImage6 from "../images/chennai.jpg";
-import myImage7 from "../images/ahmdabad.jpeg"
-import myImage8 from "../images/goa.avif";
-import myImage9 from "../images/lucknow.jpeg";
+import myImage7 from "../images/ahmdabad.jpg"
+import myImage8 from "../images/goa.jpg";
+import myImage9 from "../images/lucknow.jpg";
 import myImage10 from "../images/pune.jpg";
 import myImage11 from "../images/crousel1.png";
 import myImage12 from "../images/crousel2.png";
 import myImage13 from "../images/crousel3.png";
+import backImg from "../images/DestBackImg.avif";
 
 const cardData = [
     {
@@ -32,7 +34,7 @@ const cardData = [
     {
         id: 3,
         imgsrc: myImage3,
-        city: "Banglore",
+        city: "Bangalore",
         text: "Known as the Silicon Valley of India, Bangalore is a vibrant city blending rich tradition and cutting-edge technology. Experience its lush green parks, bustling nightlife, amazing historic palaces, and a thriving booming tech innovation scene."
     },
     {
@@ -51,7 +53,7 @@ const cardData = [
         id: 6,
         imgsrc: myImage6,
         city: "Chennai",
-        text: "Chennai, known as the Gateway to South India, is a vibrant city celebrated for its rich cultural heritage and stunning coastline. Explore the majestic temples, relax on Marina Beach, and savor the delicious flavors of South Indian cuisine in this bustling metropolis"
+        text: "Chennai, known as the Gateway to South India, is a vibrant city for its rich cultural heritage and stunning coastline. Explore the majestic temples, relax on Marina Beach, and savor the delicious flavors of South Indian cuisine in this metropolis"
     },
     {
         id: 7,
@@ -68,7 +70,7 @@ const cardData = [
     {
         id: 9,
         imgsrc: myImage9,
-        city: "Lacknow",
+        city: "Lucknow",
         text: "Lucknow, the city of Nawabs, is known for its rich history, stunning architecture, and delicious Awadhi cuisine. Explore the grandeur of the Bara Imambara and the intricate beauty of the Rumi Darwaza. Immerse yourself in the city's vibrant culture and warm hospitality."
     },
     {
@@ -79,70 +81,32 @@ const cardData = [
     },
 ];
 
-function Destinations() {
-    const cardElements = cardData.map((card) => (
-        <div key={card.id} className="card" style={{ width: '18rem', margin: '10px' }}>
-            <img src={card.imgsrc} className="card-img-top" alt={`Image of ${card.city}`} />
-            <div className="card-body">
-                <h5 className="card-title">{card.city}</h5>
-                <p className="card-text">{card.text}</p>
-                <div className="button">
-                <a href="#" className="btn btn-primary">Book Tickets</a>
-                <a href="#" className="btn btn-primary">More info</a>
-                </div>
+function Destinations(event){
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = `url('${backImg}')`;
+    const navigate = useNavigate();
 
-            </div>
-        </div>
-    ));
+    const handleClick = (city) => {
+        navigate('/', { state : { dest : city }});
+    }
 
     return (
         <div>
-            <div className="carousel-container">
-                <div id="carouselExampleDark" className="carousel carousel-dark slide">
-                    <div className="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div className="carousel-inner">
-                        <div className="carousel-item active" data-bs-interval="10000">
-                            <img src={myImage11} className="d-block w-100" alt="..." />
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>The Great Taj</h5>
-                                
-                            </div>
-                        </div>
-                        <div className="carousel-item" data-bs-interval="2000">
-                            <img src={myImage12} className="d-block w-100" alt="..." />
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>Golden Temple</h5>
-                                
-                            </div>
-                        </div>
-                        <div className="carousel-item">
-                            <img src={myImage13} className="d-block w-100" alt="..." />
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>Castle</h5>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-
             <div className="card-container">
-                {cardElements}
+                {cardData.map((card) => 
+                <div key={card.id} className="card" style={{ width: '21rem', margin: '10px' }}>
+                    <img src={card.imgsrc} className="card-img-top" alt={`Image of ${card.city}`} />
+                    <div className="card-body">
+                        <h5 className="card-title">{card.city}</h5>
+                        <p className="card-text">{card.text}</p>
+                        <div className="button">
+                        <button className="btn btn-primary" onClick={() => handleClick(card.city)}>Book Tickets</button>
+                        </div>
+                    </div>
+                </div>
+                )}
             </div>
         </div>
-
     );
 }
 

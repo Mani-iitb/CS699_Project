@@ -5,7 +5,7 @@ input[type=date], select, date{
     box-sizing: border-box;
     resize: vertical;
     display: inline-block;
-    width: 25%;
+    width: 19.25%;
 }
 
 input[type=submit] {
@@ -16,7 +16,7 @@ input[type=submit] {
     border-radius: 4px;
     cursor: pointer;
     float: right;
-    width: 25%;
+    width: 20%;
 }
 
 .search-container {
@@ -26,7 +26,20 @@ input[type=submit] {
     align-items: center;
     background-color: #f2f2f2;
     padding: 20px 20px 20px 20px;
-    width: 75%;
+    width: 80%;
     margin: auto;
     display: block;
+}
+
+.swap img{
+    display: inline-block;
+    width: 3%;
+    height: 3%;
+    background-size: contain;
+    margin-bottom: 5px;
+}
+
+.swap :hover{
+    background-color: rgb(171, 168, 168);
+    border-radius: 5px;
 }
