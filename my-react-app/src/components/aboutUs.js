@@ -1,4 +1,9 @@
-<form onSubmit={handleSubmit}>
+import React from 'react'
+
+function aboutUs() {
+  return (
+    <div>
+        <form onSubmit={handleSubmit}>
             <div className="row mb-3">
                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Passenger's Email ID</label>
                 <div className="col-sm-10">
@@ -90,3 +95,8 @@
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+    </div>
+  )
+}
+
+export default aboutUs

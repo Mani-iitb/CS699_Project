@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes, Link, useLocation} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes, Link, useLocation, redirect, useNavigate} from 'react-router-dom';
 import './App.css';
 import SearchBar from './components/SearchBar';
 import Error from './components/Error';
 import Signin from './components/signin'; 
 import Signup from './components/signup'; 
 import Destinations from './components/destination';
+import aboutUs from './components/aboutUs';
+import axios from 'axios';
+import ModifyFlight from './components/flight_modify';
 
 function App() {
 
@@ -17,9 +20,29 @@ function App() {
     const handleLogin=(name)=>{
         setName(name);
         setLogin(true);
-        
     }
-
+    useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        console.error("No token found. Please log in.");
+        setLogin(false);
+    } else {
+        axios.post("http://localhost/SL Project/CS699_Project/protected_endpoint.php", {"token":token}).then(response => {
+            if(response.data.message === "Access granted"){
+                setName(response.data.user_id);
+                setLogin(true);
+            }else{
+                setLogin(false);
+            }
+        })
+    }
+}, []);
+    const logout = (event) => {
+        localStorage.removeItem("token");
+        setName("");
+        setLogin(false);
+        window.location.href = '/';
+    }
     return (
         <div className="App">
             <BrowserRouter>
@@ -38,29 +61,16 @@ function App() {
                                         <a className="nav-link active" aria-current="page" href="/">Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">About</a>
-                                    </li>
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Menu
-                                        </a>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Book Food</a></li>
-                                            <li><a className="dropdown-item" href="#">Holiday Packages</a></li>
-                                            <li>
-                                                <hr className="dropdown-divider" />
-                                            </li>
-                                            <li><a className="dropdown-item" href="#">Travel Insurance</a></li>
-                                        </ul>
+                                        <a className="nav-link" href="/aboutUs">About</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="#" className="nav-link">Offers</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Seats</a>
+                                        <a href="#" className="nav-link">Booking History</a>
                                     </li>
                                     <li>
                                         <Link to="/destination" className="nav-link">Destinations</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/flight_modify" className="nav-link">Add Flight</Link>
                                     </li>
                                 </ul>
                                 <div>
@@ -91,7 +101,7 @@ function App() {
                                                     <span>{name}</span>
                                                 </li>
                                                 <li className='nav-item'>
-                                                    <button type="button" className="btn btn-secondary btn-sm" style={{fontSize:'10px'}}>Settings</button>
+                                                    <button type="button" className="btn btn-secondary btn-sm" style={{fontSize:'10px'}} onClick={logout} href="/">Logout</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -109,7 +119,9 @@ function App() {
                 </div>
                 {/* Routes */}
                 <Routes>
+                    {/* <Route path='/aboutUs' element = {<aboutUs/>}/> */}
                     <Route path='/destination' element = {<Destinations/>}/>
+                    <Route path='/flight_modify' element = {<ModifyFlight/>}/>
                     <Route path="error" element={<Error />} />
                 </Routes>
             </BrowserRouter>

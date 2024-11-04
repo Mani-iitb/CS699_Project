@@ -1,0 +1,1 @@
+CREATE TABLE provided_flight LIKE scrabbed_data;

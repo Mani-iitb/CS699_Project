@@ -5,6 +5,7 @@ import "./Results.css"
 function Results({flights}) {
     const [sortOn, setSortOn] = useState("price");
     const [res, setResults] = useState(flights);
+    const [isBooking, setisBooking] = useState("Third Party");
     const handleChange = (event) => {
         const selectedSort = event.target.value;
         setSortOn(selectedSort);
@@ -58,6 +59,15 @@ function Results({flights}) {
             setResults(dict);
         }
     }
+    console.log(res);
+    res.map((flight, key) =>{
+        if(flight[0].type === "Booking available"){
+            flight[0]['isBook'] = "Book";
+        } else {
+            flight[0]['isBook'] = "Link";
+        }
+    });
+    console.log(res);
   return (
     <div>
     <div className="sort-container">
@@ -75,6 +85,7 @@ function Results({flights}) {
         {res.map((flight, key) =>
         <div class="flight-card">
             <div class="flight-info">
+                <div class="type">{flight[0].type}</div>
                 <img class="flight-logo" src={flight[0].img} alt={flight[0].img}/>
                 <p><div>{flight[0].Flight_name}</div></p>
                 <p>{flight[0].Source}</p>
@@ -87,7 +98,9 @@ function Results({flights}) {
                 <p><div  class="flight-time">{flight[0].time_landing}</div></p>
                 <p>{flight[0].Destination}</p>
                 <p>&#8377;{flight[0].price}</p>
-                <button class="link"><a href={flight[0].website_link} target="_blank">Link</a></button>
+                {flight[0].isBook === "Book" ? 
+                    <button class="link"><a href={flight[0].website_link}>{flight[0].isBook}</a></button> :
+                    <button class="link"><a href={flight[0].website_link} target="_blank">{flight[0].isBook}</a></button>}
             </div>
         </div>
         )}

@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import './signin.css'; // Import any CSS styles specific to the modal
 import './signup';
 import $ from "jquery";
+import axios from 'axios';
 function Signin({ onClose,onOpen,handleLogin }) {
   const modalRef = useRef();
   const [formData, setFormData] = useState({
@@ -53,36 +54,32 @@ function Signin({ onClose,onOpen,handleLogin }) {
     }
 
     setErrors(errors);
-    return Object.keys(errors).length == 0;
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       const form = $(e.target);
-      $.ajax({
-        type:"POST",
-        url: form.attr("action"),
-        data : form.serialize(),
-        success(data){
-          
-          if(data==="Incorrect Passward"){
-            alert("Wrong Passwaar Try again ...");
+      const inData = {"email" : form[0].email.value, "password": form[0].password.value};
+      axios.post("http://localhost/SL Project/CS699_Project/signin.php", inData).then(response =>{
+        console.log(response);
+          if(response.data.message ==="Invalid password"){
+            alert("Wrong Password Try again ...");
             setFormData({
               email: '',
               password: ''
             })
           }
           else{
-            const name=data
+            localStorage.setItem("token", response.data.token);
+            console.log("Login successful, token stored.");
+            const name=response.data.name;
             handleLogin(name);
             onClose();
-            
+            window.location.reload();
           }
-        },
-      }
-      );
-     
+      });
     } else {
       console.log("Validation errors:", errors);
     }
@@ -101,7 +98,7 @@ function Signin({ onClose,onOpen,handleLogin }) {
 
         {/* Modal body with form */}
         <div className="signin-modal-body">
-          <form id="signin-form" action='http://localhost/SL Project/CS699_Project/my-react-app/PHP/signin.php' className="form" method="post" onSubmit={handleSubmit}>
+          <form id="signin-form" action='http://localhost/SL Project/CS699_Project/signin.php' className="form" method="post" onSubmit={handleSubmit}>
             <div className="input-group form-group">
               <label htmlFor="email">Email&nbsp;&nbsp;</label>
               <input

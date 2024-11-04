@@ -88,7 +88,7 @@ function Signup({ onClose }) {
                 <div className="signin-modal-body">
                     <form
                         id="signin-form"
-                        action='http://localhost/SL Project/CS699_Project/my-react-app/PHP/signup.php'
+                        action='http://localhost/SL Project/CS699_Project/signup.php'
                         method='post'
                         className="form"
                         onSubmit={handleSubmit}
