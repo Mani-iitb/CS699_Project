@@ -6,7 +6,7 @@ import Error from './components/Error';
 import Signin from './components/signin'; 
 import Signup from './components/signup'; 
 import Destinations from './components/destination';
-import aboutUs from './components/aboutUs';
+// import aboutUs from './components/aboutUs';
 import axios from 'axios';
 import ModifyFlight from './components/flight_modify';
 
@@ -16,9 +16,11 @@ function App() {
     const [showSignup, setShowSignup] = useState(false); // State to manage Signup modal visibility
     const [isLoggedIn, setLogin] =useState(false);
     const [name, setName]=useState("");
+    const [email,setEmail]=useState("");
 
     const handleLogin=(name)=>{
         setName(name);
+        setEmail(email);
         setLogin(true);
     }
     useEffect(() => {
@@ -127,7 +129,7 @@ function App() {
             </BrowserRouter>
 
             {/* Modals - Conditionally render based on state */}
-            {showSignin && <Signin onClose={() => setShowSignin(false)} onOpen={()=> setShowSignup(true)} handleLogin={(name) => handleLogin(name)}/>}
+            {showSignin && <Signin onClose={() => setShowSignin(false)} onOpen={()=> setShowSignup(true)} handleLogin={(name,email) => handleLogin(name,email)}/>}
             {showSignup && <Signup onClose={() => setShowSignup(false)} />}
         </div>
     );

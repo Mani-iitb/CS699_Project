@@ -1,102 +1,85 @@
-import React from 'react'
+import React from 'react';
 
-function aboutUs() {
-  return (
-    <div>
-        <form onSubmit={handleSubmit}>
-            <div className="row mb-3">
-                <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Passenger's Email ID</label>
-                <div className="col-sm-10">
-                    <input 
-                        type="email" 
-                        className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                        id="inputEmail3" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+
+function AboutUs() {
+    return (
+        <>
+            <div className="container my-5">
+                <div className="text-center mb-5">
+                    <h1 className="display-4">About Us</h1>
+                    <p className="lead">
+                        Welcome to our flight booking website! This project was developed as part of our course to simplify the flight booking process and provide an exceptional experience for travelers.
+                    </p>
                 </div>
-            </div>
-            <div className="row mb-3">
-                <label htmlFor="Name" className="col-sm-2 col-form-label">Passenger's Name</label>
-                <div className="col-sm-10">
-                    <input 
-                        type="text" 
-                        className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
-                        id="Name" 
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-                </div>
-            </div>
-            <fieldset className="row mb-3">
-                <legend className="col-form-label col-sm-2 pt-0">Gender</legend>
-                <div className="col-sm-10">
-                    <div className="form-check">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name="gender" 
-                            id="genderMale" 
-                            value="male" 
-                            checked={gender === 'male'}
-                            onChange={() => setGender('male')}
-                        />
-                        <label className="form-check-label" htmlFor="genderMale">
-                            Male
-                        </label>
-                    </div>
-                    <div className="form-check">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name="gender" 
-                            id="genderFemale" 
-                            value="female" 
-                            checked={gender === 'female'}
-                            onChange={() => setGender('female')}
-                        />
-                        <label className="form-check-label" htmlFor="genderFemale">
-                            Female
-                        </label>
+
+                <div className="row">
+                    <div className="col-md-6 mx-auto">
+                        <h2 className="text-center mb-4">Our Mission</h2>
+                        <p>
+                            Our mission is to create a reliable and easy-to-use platform for booking flights. We aim to empower travelers to make informed choices with a seamless booking process, whether they are planning a business trip or a vacation.
+                        </p>
                     </div>
                 </div>
-            </fieldset>
-            <div className="row mb-3">
-                <label htmlFor="age" className="col-sm-2 col-form-label">Passenger's Age</label>
-                <div className="col-sm-10">
-                    <input 
-                        type="number" 
-                        className={`form-control ${errors.age ? 'is-invalid' : ''}`} 
-                        id="age" 
-                        value={age}
-                        onChange={(e) => setAge(e.target.value)}
-                        placeholder="Enter passenger's age"
-                    />
-                    {errors.age && <div className="invalid-feedback">{errors.age}</div>}
-                </div>
-            </div>
-            <div className="row mb-3">
-                <div className="col-sm-10 offset-sm-2">
-                    <div className="form-check">
-                        <input 
-                            className="form-check-input" 
-                            type="checkbox" 
-                            id="subscribeCheck" 
-                            checked={subscribe}
-                            onChange={() => setSubscribe(!subscribe)}
-                        />
-                        <label className="form-check-label" htmlFor="subscribeCheck">
-                            Subscribe to newsletters
-                        </label>
+
+                <div className="text-center my-5">
+                    <h2>Our Team</h2>
+                    <div className="row text-center my-5">
+                        <div className="col-sm-6 mb-3 mb-sm-0">
+                            <div className="card">
+                                <div className="card-body">
+                                <i class="fa-solid fa-user-tie"></i>
+
+                                    <h5 className="card-title">Team Member Name</h5>
+                                    <p className="card-text">What work done in project</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-6">
+                            <div className="card">
+                                <div className="card-body">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                    <h5 className="card-title">Team Member Name</h5>
+                                    <p className="card-text">What work done in project</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div className="text-center my-5">
+                    <h2>Contact Us</h2>
+                    <ul className="list-unstyled">
+                        <li>Email: <a href="mailto:support@flightbooking.com">support@flightbooking.com</a></li>
+                        <li>Phone: +1 (123) 456-7890</li>
+                        <li>Address: 123 Flight Booking Lane, Travel City</li>
+                    </ul>
+                </div>
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
-    </div>
-  )
+
+            <footer className="bg-dark text-light py-4 mt-5">
+                <div className="container-fluid text-center">
+                    <div className="mb-3">
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-light mx-3">
+                            <i className="fab fa-facebook fa-2x"></i>
+                        </a>
+                        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="text-light mx-3">
+                            <i className="fab fa-twitter fa-2x"></i>
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-light mx-3">
+                            <i className="fab fa-instagram fa-2x"></i>
+                        </a>
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-light mx-3">
+                            <i className="fab fa-linkedin fa-2x"></i>
+                        </a>
+                    </div>
+                    <p className="mb-0">© 2024 Airline Booking Website. All rights reserved.</p>
+                    <small className="text-muted">Designed as a Course Project</small>
+                </div>
+            </footer>
+        </>
+    );
 }
 
-export default aboutUs
+export default AboutUs;

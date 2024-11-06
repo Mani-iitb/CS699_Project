@@ -1,2 +1,4 @@
 CREATE TABLE `airline_info`.`user_info` (`Name` VARCHAR(256) NOT NULL , `Email` VARCHAR(256) NOT NULL , `Contact` VARCHAR(10) NOT NULL , `Passward` VARCHAR(256) NOT NULL , `UserType` VARCHAR(12) NOT NULL ) ENGINE = InnoDB;
 ALTER TABLE `user_info` ADD PRIMARY KEY(`Email`);
+--------------------------------------------------------Booking data---------------------------------------------------------------------------------------
+CREATE TABLE `airline_info`.`booking_data` (`email` VARCHAR(256) NOT NULL , `name` VARCHAR(256) NOT NULL , `age` INT NOT NULL , `flight_name` VARCHAR(256) NOT NULL , `flight_date` VARCHAR(256) NOT NULL , `departure_time` VARCHAR(256) NOT NULL , `source_city` VARCHAR(256) NOT NULL , `destination_city` VARCHAR(256) NOT NULL , `gender` VARCHAR(10) NOT NULL ) ENGINE = InnoDB;

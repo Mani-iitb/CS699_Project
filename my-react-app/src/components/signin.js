@@ -62,6 +62,7 @@ function Signin({ onClose,onOpen,handleLogin }) {
     if (validateForm()) {
       const form = $(e.target);
       const inData = {"email" : form[0].email.value, "password": form[0].password.value};
+      const myEmail=inData.email;
       axios.post("http://localhost/SL Project/CS699_Project/signin.php", inData).then(response =>{
         console.log(response);
           if(response.data.message ==="Invalid password"){
@@ -75,9 +76,9 @@ function Signin({ onClose,onOpen,handleLogin }) {
             localStorage.setItem("token", response.data.token);
             console.log("Login successful, token stored.");
             const name=response.data.name;
-            handleLogin(name);
+            handleLogin(name,myEmail);
             onClose();
-            window.location.reload();
+            // window.location.reload();
           }
       });
     } else {
