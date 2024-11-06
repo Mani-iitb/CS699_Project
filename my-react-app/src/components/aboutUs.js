@@ -24,7 +24,7 @@ function AboutUs() {
                 <div className="text-center my-5">
                     <h2>Our Team</h2>
                     <div className="row text-center my-5">
-                        <div className="col-sm-6 mb-3 mb-sm-0">
+                        <div className="col-sm-6 mb-3">
                             <div className="card">
                                 <div className="card-body">
                                 <i class="fa-solid fa-user-tie"></i>
