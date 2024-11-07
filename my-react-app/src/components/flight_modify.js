@@ -4,6 +4,7 @@ import axios from 'axios';
 import './flight_modify.css';
 import FlashMessage from './flash';
 import $ from "jquery";
+import backImg from "../images/background.jpg";
 function ModifyFlight() {
     const [activeTab, setactiveTab] = useState("add");
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -14,6 +15,8 @@ function ModifyFlight() {
     const handleActiveTable = (tab) => {
         setactiveTab(tab);
     };
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = `url('${backImg}')`;
     const closePopup = () => {
         setIsPopupOpen(false);
         window.location.reload();
@@ -247,7 +250,7 @@ function ModifyFlight() {
                     </div>
                 </div>
             )}
-            <div className='Container'>
+            <div className='cont'>
                 <div className="card text-center">
                     {isLoggedIn && isSerProv ? normal() : <FlashMessage message={flashMessage.message} type={flashMessage.type} onClose={() => setFlashMessage({ message: '', type: '' })}/> }
                 </div>

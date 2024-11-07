@@ -1,0 +1,40 @@
+.container{
+    background-color: rgb(245, 247, 247);
+    border-radius: 15px;
+    padding: 15px;
+}
+.team{
+    align-items: center;
+}
+.member1{
+    display: inline-block;
+    width: 40%;
+    margin-left: 70px;
+}
+.member1:hover{
+    transition: transform 0.3s ease;
+    transform: translateY(-10px);
+}
+.member2{
+    display: inline-block;
+    width: 40%;
+    margin-left: 80px;
+}
+.member2:hover{
+    transition: transform 0.3s ease;
+    transform: translateY(-10px);
+}
+.card{
+    width: 100%;
+}
+
+.personImg{
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    margin-bottom:  30px;
+}
+
+.card-body{
+    display: inline-block;
+}

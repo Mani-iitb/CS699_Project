@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-function BookTicket({email,flight_name,flight_date,departure_time,source_city,destination_city,name,onClose,handleLogin}) {
+import FlashMessage from './flash';
+import { useLocation } from 'react-router-dom';
+function BookTicket({name,onClose,handleLogin}) {
     
+    const location = useLocation();
+    const receivedData = location.state;
     const [passengers, setPassengers] = useState([{
         name: '',
         age: '',
@@ -10,6 +14,33 @@ function BookTicket({email,flight_name,flight_date,departure_time,source_city,de
         nationality: '',
         travelInsurance: false,
     }]);
+    const [flashMessage, setFlashMessage] = useState({ message: '', type: '' });
+    const [isLoggedIn, setisLoggedIn] = useState(false);
+    const [isBooked, setisBooked] = useState(false);
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        if (!token) {
+            setisLoggedIn(false);
+            setFlashMessage({message: "Login to access this page", type: "error"});
+        } else {
+            axios.post("http://localhost/SL Project/CS699_Project/protected_endpoint.php", {"token":token}).then(response => {
+                if(response.data.message === "Access granted"){
+                    setFlashMessage({message: "Login to access this page", type: "error"});
+                    if (typeof receivedData.email === 'undefined' || receivedData.email === ""){
+                        setisLoggedIn(false);
+                        setFlashMessage({message: "Login to access this page", type: "error"});
+                    } else {
+                        setisLoggedIn(true);
+                        setFlashMessage({message: "", type: ""});
+                    }
+                }else{
+                    setisLoggedIn(false);
+                    setFlashMessage({message: "Login to access this page", type: "error"});
+                }
+            })
+        }
+    }, []);
     const [subscribe, setSubscribe] = useState(false);
     const [errors, setErrors] = useState({}); 
     const validateForm = () => {
@@ -45,12 +76,12 @@ function BookTicket({email,flight_name,flight_date,departure_time,source_city,de
             
             
             const data = {
-                email,
-                flight_name,
-                flight_date,
-                departure_time,
-                source_city,
-                destination_city,
+                "email" : receivedData.email,
+                "flight_name" : receivedData.flight_name,
+                "flight_date" : receivedData.flight_date,
+                "departure_time" : receivedData.departure_time,
+                "source_city" : receivedData.source_city,
+                "destination_city" : receivedData.destination_city,
                 passengers: filteredPassengers,
             };
             axios.post("http://localhost/SL%20Project/CS699_Project/bookTicket.php", data)
@@ -58,8 +89,6 @@ function BookTicket({email,flight_name,flight_date,departure_time,source_city,de
                     console.log(response.data);
                     if (response.data.message === "Error") {
                         alert("An error occurred. Please try again.");
-                        
-                        
                         setPassengers([{
                             name: '',
                             age: '',
@@ -70,19 +99,12 @@ function BookTicket({email,flight_name,flight_date,departure_time,source_city,de
                         }]);
                         setSubscribe(false);
                     } else {
-                        
-                        localStorage.setItem("token", response.data.token);
                         console.log("Data saved successfully");
-                        handleLogin(name); 
-                        onClose();
+                        setFlashMessage({message: "Ticket Booked Successfully", type: "success"});
+                        setisBooked(true);
                     }
                 })
-                .catch(error => {
-                    console.error("Error submitting data:", error);
-                    alert("Submission failed. Please check your network or try again later.");
-                });
         } else {
-            
             setErrors(formErrors);
         }
     };
@@ -105,9 +127,9 @@ function BookTicket({email,flight_name,flight_date,departure_time,source_city,de
         setPassengers(updatedPassengers);
     };
 
-    return (
-        <div className='Container' style={{ paddingTop: '60px' }}>
-            <div className="card" style={{ width: '70%', margin: '0 auto' }}>
+    function normal(){
+        return (
+            <div>
                 <h5 className="card-header" style={{ textAlign: 'center' }}>Book Ticket</h5>
                 <div className="card-body">
                     <h5 className="card-title">Passenger Info</h5>
@@ -252,6 +274,18 @@ function BookTicket({email,flight_name,flight_date,departure_time,source_city,de
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
+            </div>
+        )
+    }
+
+    return (
+        <div className='Container' style={{ paddingTop: '60px', paddingLeft: 0, alignContent:"center" }}>
+            <div className="card" style={{ width: '70%', margin: '0 auto', alignContent: "center"}}>
+            <div style={{backgroundColor : 'lightgreen'}}>
+            {isBooked ? <FlashMessage message={flashMessage.message} type={flashMessage.type}/> : ""}
+            </div>
+            {isLoggedIn ? normal() : 
+            <FlashMessage message={flashMessage.message} type={flashMessage.type} onClose={() => setFlashMessage({ message: '', type: '' })}/> }
             </div>
         </div>
     );

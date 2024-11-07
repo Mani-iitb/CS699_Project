@@ -1,4 +1,5 @@
 // FlashMessage.js
+import './flash.css';
 import React from 'react';
 
 const FlashMessage = ({ message, type, onClose }) => {

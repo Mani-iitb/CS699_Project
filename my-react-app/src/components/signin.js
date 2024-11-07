@@ -78,7 +78,7 @@ function Signin({ onClose,onOpen,handleLogin }) {
             const name=response.data.name;
             handleLogin(name,myEmail);
             onClose();
-            // window.location.reload();
+            window.location.reload();
           }
       });
     } else {

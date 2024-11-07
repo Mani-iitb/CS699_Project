@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import "./Results.css"
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Results({flights}) {
     const [sortOn, setSortOn] = useState("price");
     const [res, setResults] = useState(flights);
     const [isBooking, setisBooking] = useState("Third Party");
+    const token = localStorage.getItem("token");
+    const [email, setEmail] = useState("");
+    useEffect(() => {
+        if (!token) {
+            setEmail("");
+        } else {
+            axios.post("http://localhost/SL Project/CS699_Project/protected_endpoint.php", {"token":token}).then(response => {
+                if(response.data.message === "Access granted"){
+                    setEmail(response.data.user_id);
+                }else{
+                    setEmail("");
+                }
+            })
+        }
+    }, []);
     const handleChange = (event) => {
         const selectedSort = event.target.value;
         setSortOn(selectedSort);
@@ -59,7 +76,6 @@ function Results({flights}) {
             setResults(dict);
         }
     }
-    console.log(res);
     res.map((flight, key) =>{
         if(flight[0].type === "Booking available"){
             flight[0]['isBook'] = "Book";
@@ -67,7 +83,17 @@ function Results({flights}) {
             flight[0]['isBook'] = "Link";
         }
     });
-    console.log(res);
+    const navigate = useNavigate();
+    const handleBook = (fName, fDate, fTakeOff, fSorurce, fDestination) => {
+        const dataToSend = {"email" : email, 
+                            "flight_name": fName,
+                            "flight_date" : fDate,
+                            "departure_time" : fTakeOff,
+                            "source_city" : fSorurce,
+                            "destination_city" : fDestination
+        };
+        navigate('/bookTicket', { state: dataToSend });
+    }
   return (
     <div>
     <div className="sort-container">
@@ -99,7 +125,9 @@ function Results({flights}) {
                 <p>{flight[0].Destination}</p>
                 <p>&#8377;{flight[0].price}</p>
                 {flight[0].isBook === "Book" ? 
-                    <button class="link"><a href={flight[0].website_link}>{flight[0].isBook}</a></button> :
+                    <button class="link" onClick={() => handleBook(flight[0].Flight_name, flight[0].Flight_Date, 
+                        flight[0].time_takeoff, flight[0].Source, flight[0].Destination
+                    )}><a href="#">{flight[0].isBook}</a></button> :
                     <button class="link"><a href={flight[0].website_link} target="_blank">{flight[0].isBook}</a></button>}
             </div>
         </div>

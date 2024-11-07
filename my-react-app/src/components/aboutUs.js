@@ -1,47 +1,48 @@
 import React from 'react';
+import './aboutUs.css';
+import person from "../images/person.png"
+import aboutbackImg from "../images/aboutus_bck.jpg"
 
 
 function AboutUs() {
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = `url('${aboutbackImg}')`;
     return (
         <>
-            <div className="container my-5">
-                <div className="text-center mb-5">
+            <div className="container" >
+                <div className="text-center">
                     <h1 className="display-4">About Us</h1>
-                    <p className="lead">
+                    <p>
                         Welcome to our flight booking website! This project was developed as part of our course to simplify the flight booking process and provide an exceptional experience for travelers.
                     </p>
                 </div>
-
                 <div className="row">
-                    <div className="col-md-6 mx-auto">
-                        <h2 className="text-center mb-4">Our Mission</h2>
+                    <div>
+                        <h2>Our Mission</h2>
                         <p>
                             Our mission is to create a reliable and easy-to-use platform for booking flights. We aim to empower travelers to make informed choices with a seamless booking process, whether they are planning a business trip or a vacation.
                         </p>
                     </div>
                 </div>
 
-                <div className="text-center my-5">
+                <div class="team">
                     <h2>Our Team</h2>
-                    <div className="row text-center my-5">
-                        <div className="col-sm-6 mb-3">
+                    <div >
+                        <div class="member1">
                             <div className="card">
+                                <img class="personImg" src={person}></img>
                                 <div className="card-body">
-                                <i class="fa-solid fa-user-tie"></i>
-
-                                    <h5 className="card-title">Team Member Name</h5>
-                                    <p className="card-text">What work done in project</p>
-                                    
+                                    <h5 className="card-title">Manivannan N</h5>
+                                    <p className="card-text">24m0796</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        <div class="member2">
                             <div className="card">
+                                <img class="personImg" src={person}></img>
                                 <div className="card-body">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                    <h5 className="card-title">Team Member Name</h5>
-                                    <p className="card-text">What work done in project</p>
-                                    
+                                    <h5 className="card-title">Kartik Patel</h5>
+                                    <p className="card-text">24m0777</p>
                                 </div>
                             </div>
                         </div>

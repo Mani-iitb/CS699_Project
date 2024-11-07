@@ -4,15 +4,19 @@ import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Results from '../components/Results';
 import './SearchBar.css';
-import SwapImg from '../images/swap.png'
+import SwapImg from '../images/swap.png';
+import backImg from '../images/background.jpg';
 
 function SearchBar() {
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = `url('${backImg}')`;
     const [inputs, setInputs] = useState();
     const [flights, setflights] = useState();
     const [showSearch, setShowSearch] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const [noResult, setNoResults] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
+    const [toggle, settoggle] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -37,9 +41,7 @@ function SearchBar() {
                   type: inputs.type
                 }
               }).then(function(response) {
-                console.log(response.data);
                 if(response.data === "0 results"){
-                    console.log("catched");
                     setNoResults(true);
                     setShowResults(false);
                 } else{
@@ -48,6 +50,7 @@ function SearchBar() {
                     setShowSearch(true);
                     setNoResults(false);
                 }
+                settoggle(!toggle);
             });
         } catch(error){
             console.log("error");
@@ -73,7 +76,6 @@ function SearchBar() {
             alert('Please select all the inputs');
         } else {
             getFlights();
-            console.log(inputs);
         }
     }
 
@@ -81,14 +83,12 @@ function SearchBar() {
         const name = event.target.name;
         const value = event.target.value;
         setInputs(values => ({...values, [name]:value}));
-        console.log(inputs);
     }
     const handleChangeDest = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         setInputs(values => ({...values, [name]:value}));
         setSelectedValue(event.target.value);
-        console.log(inputs);
     }
 
     const handleSwap = (event) => {
@@ -102,10 +102,13 @@ function SearchBar() {
                 if(("source" in inputs)){
                     tempSrc = inputs.source;
                 }
+                console.log(inputs);
                 inputs.destination = tempSrc;
                 document.getElementById("destination").value=tempSrc;
                 inputs.source = tempDest;
                 document.getElementById("source").value=tempDest;
+                setSelectedValue(tempSrc);
+                console.log(inputs);
             }
         }
     }
@@ -148,12 +151,13 @@ function SearchBar() {
                         <option value="P">Premium Economy</option>
                         <option value="B">Business class</option>
                     </select> 
-                    <input type="submit" value="Submit"/>     
+                    <input type="submit" value="Submit" onClick={handleSubmit}/>     
                   </form>
               </div>
+        <div key={toggle}>
         {noResult ? <div><h1>No Results Found!</h1></div> : null}
         {showResults ? <Results flights={flights}/> : null}
-        
+        </div>
     </div>
   )
 }

@@ -2,12 +2,14 @@
 .flash-message {
     padding: 10px;
     border-radius: 5px;
-    margin: 10px 0;
+    margin: 0 auto;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 50%;
+    justify-content: center;
 }
-.flash-message.success { background-color: #4CAF50; }
+.flash-message.success { color: #4CAF50; }
 .flash-message.error { background-color: #f44336; }
-.flash-message.warning { background-color: #ff9800; }
+.flash-message.warning { color: #ff9800; }

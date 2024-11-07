@@ -27,7 +27,9 @@ if (!$result) {
         echo json_encode(["success" => true, "data" =>[] ]);
     } else {
         while ($row = mysqli_fetch_assoc($result)) {
-            $rows[] = $row;
+            $rows[] = ["email" => $row["email"], "name" => $row["name"], "age" => $row["age"], "flight_name" => $row["flight_name"], "flight_date" => $row["flight_date"],
+                        "departure_time" => $row["departure_time"], "source_city" => $row["source_city"], "destination_city" => $row["destination_city"],
+                        "gender" => $row["gender"]];
         }
         echo json_encode(["success" => true, "data" => $rows]);
     }

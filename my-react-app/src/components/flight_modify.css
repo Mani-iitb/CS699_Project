@@ -4,8 +4,9 @@
     justify-content: center;
     padding: 20px;
 }
-.Container{
-    padding-left: 20%;
+.cont{
+    padding-left: 10%;
+    width:90%;
 }
 #datechoose{
     padding: 40px;

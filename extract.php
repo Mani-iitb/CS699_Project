@@ -23,7 +23,7 @@ for ($i = 0; $i < count($city_codes); $i++) {
         $des = $city_codes[$j];
 
         // Execute the Python command
-        $output = shell_exec('python -u "C:\xampp\htdocs\SL Project\CS699_Project\extract.py" ' . $src . ' ' . $des . ' 2024-11-04 E 2>&1');        
+        $output = shell_exec('python -u "C:\xampp\htdocs\SL Project\CS699_Project\extract.py" ' . $src . ' ' . $des . ' 2024-11-06 E 2>&1');        
         if (!$output) {
             echo json_encode(array("error" => "Failed to execute Python script for $src -> $des"));
             continue;

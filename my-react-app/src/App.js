@@ -9,9 +9,15 @@ import Destinations from './components/destination';
 // import aboutUs from './components/aboutUs';
 import axios from 'axios';
 import ModifyFlight from './components/flight_modify';
+import backImg from "./images/background.jpg";
+import AboutUs from './components/aboutUs';
+import BookTicket from './components/bookTicket';
+import ShowHistory from './components/history';
 
 function App() {
 
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = `url('${backImg}')`;
     const [showSignin, setShowSignin] = useState(false); // State to manage Signin modal visibility
     const [showSignup, setShowSignup] = useState(false); // State to manage Signup modal visibility
     const [isLoggedIn, setLogin] =useState(false);
@@ -43,8 +49,10 @@ function App() {
         localStorage.removeItem("token");
         setName("");
         setLogin(false);
-        window.location.href = '/';
-    }
+        window.location.reload();
+    };
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = `url('${backImg}')`;
     return (
         <div className="App">
             <BrowserRouter>
@@ -66,7 +74,7 @@ function App() {
                                         <a className="nav-link" href="/aboutUs">About</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="#" className="nav-link">Booking History</a>
+                                        <a href="/showHistory" className="nav-link">Booking History</a>
                                     </li>
                                     <li>
                                         <Link to="/destination" className="nav-link">Destinations</Link>
@@ -124,10 +132,12 @@ function App() {
                     {/* <Route path='/aboutUs' element = {<aboutUs/>}/> */}
                     <Route path='/destination' element = {<Destinations/>}/>
                     <Route path='/flight_modify' element = {<ModifyFlight/>}/>
+                    <Route path='/showHistory' element = {<ShowHistory/>}/>
+                    <Route path='/aboutus' element = {<AboutUs/>}/>
+                    <Route path='/bookTicket' element = {<BookTicket/>}/>
                     <Route path="error" element={<Error />} />
                 </Routes>
             </BrowserRouter>
-
             {/* Modals - Conditionally render based on state */}
             {showSignin && <Signin onClose={() => setShowSignin(false)} onOpen={()=> setShowSignup(true)} handleLogin={(name,email) => handleLogin(name,email)}/>}
             {showSignup && <Signup onClose={() => setShowSignup(false)} />}
