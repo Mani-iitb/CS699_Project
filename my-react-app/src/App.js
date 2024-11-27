@@ -6,7 +6,6 @@ import Error from './components/Error';
 import Signin from './components/signin'; 
 import Signup from './components/signup'; 
 import Destinations from './components/destination';
-// import aboutUs from './components/aboutUs';
 import axios from 'axios';
 import ModifyFlight from './components/flight_modify';
 import backImg from "./images/background.jpg";
@@ -18,8 +17,8 @@ function App() {
 
     var body = document.getElementsByTagName('body')[0];
     body.style.backgroundImage = `url('${backImg}')`;
-    const [showSignin, setShowSignin] = useState(false); // State to manage Signin modal visibility
-    const [showSignup, setShowSignup] = useState(false); // State to manage Signup modal visibility
+    const [showSignin, setShowSignin] = useState(false); 
+    const [showSignup, setShowSignup] = useState(false); 
     const [isLoggedIn, setLogin] =useState(false);
     const [name, setName]=useState("");
     const [email,setEmail]=useState("");
@@ -129,7 +128,7 @@ function App() {
                 </div>
                 {/* Routes */}
                 <Routes>
-                    {/* <Route path='/aboutUs' element = {<aboutUs/>}/> */}
+                    
                     <Route path='/destination' element = {<Destinations/>}/>
                     <Route path='/flight_modify' element = {<ModifyFlight/>}/>
                     <Route path='/showHistory' element = {<ShowHistory/>}/>
@@ -138,7 +137,7 @@ function App() {
                     <Route path="error" element={<Error />} />
                 </Routes>
             </BrowserRouter>
-            {/* Modals - Conditionally render based on state */}
+            
             {showSignin && <Signin onClose={() => setShowSignin(false)} onOpen={()=> setShowSignup(true)} handleLogin={(name,email) => handleLogin(name,email)}/>}
             {showSignup && <Signup onClose={() => setShowSignup(false)} />}
         </div>

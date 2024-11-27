@@ -13,7 +13,7 @@ function verifyJWT($jwt, $secretKey) {
         $decoded = JWT::decode($jwt, new Key($secretKey, 'HS256'));
         return (array) $decoded;
     } catch (Exception $e) {
-        return null;  // Invalid token
+        return null;  
     }
 }
 ?>

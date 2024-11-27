@@ -2,23 +2,23 @@
 .signin-modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7); /* Darker background for more contrast */
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
-/* Modal content box */
+
 .signin-modal-content {
     background: #ffffff;
-    border-radius: 10px; /* Slightly larger radius for a softer look */
+    border-radius: 10px; 
     width: 400px;
-    padding: 30px; /* Increased padding for a more spacious feel */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow for better separation */
+    padding: 30px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Modal header */
+
 .signin-modal-header {
     display: flex;
     justify-content: space-between;
@@ -26,61 +26,60 @@
     margin-bottom: 20px;
 }
 
-/* Close button style */
+
 .close-btn {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 20px; /* Larger font size for better visibility */
+    font-size: 20px; 
 }
 
-/* Modal form input groups */
+
 .input-group {
-    margin-bottom: 20px; /* Increased margin for better spacing */
+    margin-bottom: 20px;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 5px; /* Reduced margin for tighter spacing */
-    font-weight: 600; /* Bolder label for better readability */
+    margin-bottom: 5px; 
+    font-weight: 600; 
 }
 
 .form-control {
     width: 100%;
-    padding: 6px; /* Increased padding for more touch-friendly inputs */
-    border-radius: 5px; /* Slightly larger radius for inputs */
+    padding: 6px; 
+    border-radius: 5px;
     border: 1px solid #ccc;
-    transition: border-color 0.3s; /* Smooth transition for focus */
+    transition: border-color 0.3s; 
 }
-
 .form-control:focus {
-    border-color: #007bff; /* Highlight border color on focus */
-    outline: none; /* Remove default outline */
+    border-color: #007bff; 
+    outline: none; 
     
 }
 
-/* Primary button styles */
+
 .btn-primary {
     background-color: #007bff;
     border: none;
-    padding: 12px; /* Increased padding for better touch target */
+    padding: 12px; 
     border-radius: 5px;
     width: 100%;
     cursor: pointer;
     color: white;
     font-size: 16px;
-    transition: background-color 0.3s; /* Smooth transition on hover */
+    transition: background-color 0.3s; 
 }
 
 .btn-primary:hover {
-    background-color: #0056b3; /* Darker on hover for better feedback */
+    background-color: #0056b3;
 }
 
-/* Footer */
+
 .signin-modal-footer {
     margin-top: 20px;
     text-align: center;
-    font-size: 14px; /* Smaller font size for footer */
+    font-size: 14px; 
 }
 
 .signin-modal-footer a {
@@ -90,7 +89,7 @@
 
 .signin-modal-footer a:hover {
     text-decoration: underline;
-    color: #0056b3; /* Darker color on hover for better feedback */
+    color: #0056b3;
 }
 .error {
     color: red;

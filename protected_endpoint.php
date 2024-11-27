@@ -6,7 +6,6 @@ header('Content-Type: application/json');
 
 $secretKey = "Group-Great";
 
-// Extract token from request header
 
 $json = file_get_contents('php://input');
 $json = json_decode($json, true);

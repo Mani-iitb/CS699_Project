@@ -31,7 +31,7 @@ function ShowHistory() {
     }, []);
     console.log(email);
 
-    // Function to display the data in the table
+   
     function displayData(bookingHistory) {
         console.log(bookingHistory);
         return bookingHistory.map(booking => (
